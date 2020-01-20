@@ -54,7 +54,6 @@ namespace BerlinClock
             byte minutesRow2 = (byte)(time.Minutes % 5);
             berlinTime.Append(getBerlinRow(4, minutesRow2));
 
-            // Returns the final string
             return berlinTime.ToString();
 
             // Helper to get the row of the clock.
