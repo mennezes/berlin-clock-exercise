@@ -34,34 +34,22 @@ namespace BerlinClock
 
         public string convertTime(string aTime)
         {
-            // Try parsing to a DateTime and use it to validate the input
             Time time = Time.Parse(aTime);
+            StringBuilder berlinTime = new StringBuilder();
 
-            // This will store the ammout of lights on per row
-            int[] rows = new int[5];
+            // Seconds
+            berlinTime.AppendLine(getRow(0, time.Seconds % 2 == 0 ? 1 : 0));
 
-            // The first row is the seconds, if it is even, then it is on
-            rows[0] = time.Seconds % 2 == 0 ? 1 : 0;
+            // Hours
+            berlinTime.AppendLine(getRow(1, time.Hours / 5));
+            berlinTime.AppendLine(getRow(2, time.Hours % 5));
 
-            // For the hours, we need to divide exactly by 5 to know how many red should be on the 1st row
-            // And the rest of the division is the red on the 2nd row
-            rows[1] = time.Hours / 5;
-            rows[2] = time.Hours % 5;
-
-            // For the minutes, we need the same division as the hours
-            rows[3] = time.Minutes / 5;
-            rows[4] = time.Minutes % 5;
-
-            // The final string
-            StringBuilder sb = new StringBuilder();
-            for(int i = 0; i < 5; i++)
-            {
-                sb.AppendLine(getRow(i, rows[i]));
-            }
-            sb.Length = sb.Length - 2;
+            // Minutes
+            berlinTime.AppendLine(getRow(3, time.Minutes / 5));
+            berlinTime.Append(getRow(4, time.Minutes % 5));
 
             // Returns the final string
-            return sb.ToString();
+            return berlinTime.ToString();
         }
 
         /// <summary>
