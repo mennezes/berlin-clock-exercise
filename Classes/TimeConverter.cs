@@ -37,16 +37,20 @@ namespace BerlinClock
             Time time = Time.Parse(aTime);
             StringBuilder berlinTime = new StringBuilder();
 
-            // Seconds
-            berlinTime.AppendLine(getRow(0, time.Seconds % 2 == 0 ? 1 : 0));
+            int secondsRow = time.Seconds % 2 == 0 ? 1 : 0;
+            berlinTime.AppendLine(getRow(0, secondsRow));
 
-            // Hours
-            berlinTime.AppendLine(getRow(1, time.Hours / 5));
-            berlinTime.AppendLine(getRow(2, time.Hours % 5));
+            int hoursRow1 = time.Hours / 5;
+            berlinTime.AppendLine(getRow(1, hoursRow1));
 
-            // Minutes
-            berlinTime.AppendLine(getRow(3, time.Minutes / 5));
-            berlinTime.Append(getRow(4, time.Minutes % 5));
+            int hoursRow2 = time.Hours % 5;
+            berlinTime.AppendLine(getRow(2, hoursRow2));
+
+            int minutesRow1 = time.Minutes / 5;
+            berlinTime.AppendLine(getRow(3, minutesRow1));
+
+            int minutesRow2 = time.Minutes % 5;
+            berlinTime.Append(getRow(4, minutesRow2));
 
             // Returns the final string
             return berlinTime.ToString();
