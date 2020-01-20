@@ -34,35 +34,32 @@ namespace BerlinClock
 
         public string convertTime(string aTime)
         {
-            Time time = Time.Parse(aTime);
+            TimeParser timeParser = new TimeParser();
+            Time time = timeParser.Parse(aTime);
+
             StringBuilder berlinTime = new StringBuilder();
 
-            int secondsRow = time.Seconds % 2 == 0 ? 1 : 0;
-            berlinTime.AppendLine(getRow(0, secondsRow));
+            byte secondsRow = (byte)(time.Seconds % 2 == 0 ? 1 : 0);
+            berlinTime.AppendLine(getBerlinRow(0, secondsRow));
 
-            int hoursRow1 = time.Hours / 5;
-            berlinTime.AppendLine(getRow(1, hoursRow1));
+            byte hoursRow1 = (byte)(time.Hours / 5);
+            berlinTime.AppendLine(getBerlinRow(1, hoursRow1));
 
-            int hoursRow2 = time.Hours % 5;
-            berlinTime.AppendLine(getRow(2, hoursRow2));
+            byte hoursRow2 = (byte)(time.Hours % 5);
+            berlinTime.AppendLine(getBerlinRow(2, hoursRow2));
 
-            int minutesRow1 = time.Minutes / 5;
-            berlinTime.AppendLine(getRow(3, minutesRow1));
+            byte minutesRow1 = (byte)(time.Minutes / 5);
+            berlinTime.AppendLine(getBerlinRow(3, minutesRow1));
 
-            int minutesRow2 = time.Minutes % 5;
-            berlinTime.Append(getRow(4, minutesRow2));
+            byte minutesRow2 = (byte)(time.Minutes % 5);
+            berlinTime.Append(getBerlinRow(4, minutesRow2));
 
             // Returns the final string
             return berlinTime.ToString();
-        }
 
-        /// <summary>
-        /// Helper to get the row of the clock.
-        /// It combines the "on" lights with the "off" lights
-        /// </summary>
-        /// <param name="row">The number of the row (starts on 0)</param>
-        /// <param name="amount">The amout of lights on in the row</param>
-        /// <returns></returns>
-        private string getRow(int row, int amount) => string.Concat(_on[row].Substring(0, amount),  _off[row].Substring(amount));
+            // Helper to get the row of the clock.
+            // It combines the "on" lights with the "off" lights
+            string getBerlinRow(byte row, byte amount) => string.Concat(_on[row].Substring(0, amount), _off[row].Substring(amount));
+        }
     }
 }

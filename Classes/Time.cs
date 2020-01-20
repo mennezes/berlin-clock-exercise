@@ -11,27 +11,45 @@ namespace BerlinClock.Classes
     /// </summary>
     public class Time
     {
-        private int hours;
-        public int Hours => hours;
-
-        private int minutes;
-        public int Minutes => minutes;
-
-        private int seconds;
-        public int Seconds => seconds;
-
-        public static Time Parse(string timeString)
+        private byte _hours;
+        public byte Hours
         {
-            string[] parts = timeString.Split(':');
-            if (parts.Length < 3) throw new ArgumentException("Invalid time provided. It should be in 'hh:mm:ss' format");
-
-            Time time = new Time();
-
-            if (!int.TryParse(parts[0], out time.hours) || time.hours < 0 || time.hours > 24) throw new ArgumentException("Invalid time provided. Hours must be between 00 and 24");
-            if (!int.TryParse(parts[1], out time.minutes) || time.minutes < 0 || time.minutes > 59) throw new ArgumentException("Invalid time provided. Minutes must be between 00 and 59");
-            if (!int.TryParse(parts[2], out time.seconds) || time.seconds < 0 || time.seconds > 59) throw new ArgumentException("Invalid time provided. Seconds must be between 00 and 59");
-
-            return time;
+            get => _hours;
+            set
+            {
+                if (_hours < 0 || _hours > 24) throw new ArgumentOutOfRangeException("Hours must be between 0 and 24");
+                _hours = value;
+            }
         }
+
+        private byte _minutes;
+        public byte Minutes
+        {
+            get => _minutes;
+            set
+            {
+                if (_minutes < 0 || _minutes > 59) throw new ArgumentOutOfRangeException("Minutes must be between 0 and 59");
+                _minutes = value;
+            }
+        }
+
+        private byte _seconds;
+        public byte Seconds
+        {
+            get => _seconds;
+            set
+            {
+                if (_seconds < 0 || _seconds > 59) throw new ArgumentOutOfRangeException("Seconds must be between 0 and 59");
+                _seconds = value;
+            }
+        }
+
+        public Time(byte hours = 0, byte minutes = 0, byte seconds = 0)
+        {
+            _hours = hours;
+            _minutes = minutes;
+            _seconds = seconds;
+        }
+
     }
 }
