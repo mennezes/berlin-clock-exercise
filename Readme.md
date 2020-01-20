@@ -12,23 +12,8 @@ first row every lamp represents 5 minutes. In this first row the 3rd, 6th and 9t
 quarter, half and last quarter of an hour. The other lamps are yellow. In the last row with 4 lamps every lamp
 represents 1 minute.
 
-One can be seen [here](http://uniqueclocks.co.uk/media/berlin~clock.jpg~1.gif)
+## The Implementation
+Two string arrays are created at the construction of the TimeConverter. One is a pattern with the lights **ON**, and the other, with the lights **OFF**. The time provided is then parsed throught a custom Time parser and then, each row is calculated and the Berlin Clock string is built. A helper method was created that receives the current row and the amount of lights that should be ON.
 
-## The brief
-
-We have created a number of acceptance tests for the Berlin Clock and your challenge is to get them passing.
-
-## Some hints
-ensure that your machine has visual studio (we used 2013), and the following 2 extensions: 1) Nuget 2) 'specflow for visual studio 2013' (or appropriate). These can be installed under menu tools, Extensions and updates.	
-
-The exercise contains an un-implemented Specflow BDD test (see http://www.specflow.org/getting-started/). The use of BDD in this instance is to provide you with our definition of done for the task.
-
-Please ensure that you are familiar with our values in the instructions project.  They are important to us.
-
-* simple, elegant code that reads like a narrative
-* thinking about the code more than the writing of the code (we spend a lot of time thinking/debating about what we are writing)
-* transparency and feedback to support continuous learning
-* excellent testing that acts as documentation for the code
-* challenging boundaries where necessary
-
-
+## Remarks
+At first, the .NET built in DateTime class was used to parse the time, however, as one of the tests uses a `24:00:00` time as an input, the parser fails. Upon research, it was discovered that this format is rarely used, but exists. This is the reason a custom time parser was implemented, as there was none built in which could handle that data.
